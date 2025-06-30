@@ -1,33 +1,93 @@
 #include "Game.h"
+#include <SDL2/SDL.h>
 #include <iostream>
 
 Game::Game() {
 
-    std::cout << "Game constructor Called" << std::endl;
+  isRunning = false;
+  std::cout << "Game constructor Called" << std::endl;
 }
 
-Game::~Game() {
+Game::~Game() { std::cout << "Game destructor Called" << std::endl; }
 
-        std::cout << "Game destructor Called" << std::endl;
+void Game::Initialize() {
 
+  if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+
+    std::cerr << "Error Initializing SDL!" << std::endl;
+    return;
+  }
+
+  // Create a window
+  window =
+      SDL_CreateWindow(NULL, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                       800, 600, SDL_WINDOW_BORDERLESS
+
+      );
+
+  if (!window) {
+
+    std::cerr << "Error creating SDL Window!" << std::endl;
+    return;
+  }
+
+  renderer = SDL_CreateRenderer(window, -1, 0);
+
+  if (!renderer) {
+
+    std::cerr << "Error Creating SDL Renderer:" << std::endl;
+    return;
+  }
+  isRunning = true;
 }
-
-void Game::Initialize(){}
 
 void Game::Run() {
 
-    // while(true) {
-
-    //     ProcessInput();
-    //     Update();
-    //     Render();
-    // }
+  while (isRunning) {
+    ProcessInput();
+    Update();
+    Render();
+  }
 }
 
-void Game::ProcessInput() {}
+void Game::ProcessInput() {
 
-void Game::Update() {}
+  SDL_Event sdlEvent;
+  while (SDL_PollEvent(&sdlEvent)) {
 
-void Game::Destroy() {}
+    switch (sdlEvent.type) {
+    case SDL_QUIT:
+      isRunning = false;
+      break;
 
-void Game::Render(){}
+    case SDL_KEYDOWN:
+      if (sdlEvent.key.keysym.sym == SDLK_ESCAPE) {
+        isRunning = false;
+      }
+      break;
+    }
+  }
+}
+
+void Game::Update() {
+
+  // Todo Update Game Objects
+}
+
+void Game::Destroy() {
+
+  // Clean Up
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(window);
+  SDL_Quit();
+}
+
+void Game::Render() {
+
+  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); 
+  SDL_RenderClear(renderer);
+
+  // Render all game objects
+
+  SDL_RenderPresent(renderer);
+}
