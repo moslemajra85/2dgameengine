@@ -14,11 +14,15 @@ public:
   Game();
   ~Game();
   void Initialize();
+  void Setup();
   void ProcessInput();
   void Update();
   void Run();
   void Render();
   void Destroy();
+
+  int windowWidth;
+  int windowHeight;
 };
 
 #endif
