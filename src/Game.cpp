@@ -87,10 +87,21 @@ void Game::Setup() {
 
   // Initialize game objects
   playerPosition = glm::vec2(10.0, 20.0);
-  playerVelocity = glm::vec2(0.03, 0.0);
+  playerVelocity = glm::vec2(1.0, 0.0);
 }
 
 void Game::Update() {
+
+  // if we are too fast, we need to wast some time
+  // until we reach the target time that each frame
+  // should take(MILLISECS_PER_FRAME)
+
+  //locking the execution inside the while loop
+  while (!SDL_TICKS_PASSED(SDL_GetTicks(),
+                           millisecsPreviousFrame + MILLISECS_PER_FRAME));
+
+  // store the current frame time
+  millisecsPreviousFrame = SDL_GetTicks();
 
   // Todo Update Game Objects
   playerPosition.x += playerVelocity.x;
