@@ -1,0 +1,48 @@
+# Compiled source files
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+*.out
+*.a
+*.lib
+
+# Build directories
+/build/
+/bin/
+/dist/
+/Debug/
+/Release/
+
+# IDE files
+*.vcxproj*
+*.sln
+*.user
+*.DS_Store
+*.idea/
+*.vscode/
+*.swp
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Temporary files
+*.tmp
+*.bak
+
+# Engine-specific
+*.pch
+
+# Ignore generated assets
+/assets/generated/  
